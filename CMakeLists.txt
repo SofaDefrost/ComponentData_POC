@@ -28,14 +28,21 @@ set(HEADER_FILES
     src/${PROJECT_NAME}/DataComponent.h
   
     src/${PROJECT_NAME}/MyUniformMass.h
+    src/${PROJECT_NAME}/MyUniformMass.inl
     src/${PROJECT_NAME}/MyMass.h
+    src/${PROJECT_NAME}/MyMass.inl
     src/${PROJECT_NAME}/MyConstantForceField.h
+    src/${PROJECT_NAME}/MyConstantForceField.inl
     src/${PROJECT_NAME}/MyForceField.h
+    src/${PROJECT_NAME}/MyForceField.inl
 
     src/${PROJECT_NAME}/MyMechanicalObject.h
+    src/${PROJECT_NAME}/MyMechanicalObject.inl
 
     src/${PROJECT_NAME}/MyRigidMapping.h
+    src/${PROJECT_NAME}/MyRigidMapping.inl
     src/${PROJECT_NAME}/MyMapping.h
+    src/${PROJECT_NAME}/MyMapping.inl
 
     src/${PROJECT_NAME}/initComponentData_POC.h
 )
