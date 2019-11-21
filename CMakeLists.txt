@@ -8,9 +8,7 @@ set(${PROJECT_NAME}_VERSION ${QMLUI_MAJOR_VERSION}.${QMLUI_MINOR_VERSION})
 set (CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
-  # All required files to modify to implement a Link-less version of the components used by the packaged scene ConstantForceField.py 
-    src/${PROJECT_NAME}/DataComponent.cpp
-  
+  # All required files to modify to implement a Link-less version of the components used by the packaged scene ConstantForceField.py
     src/${PROJECT_NAME}/MyUniformMass.cpp
     src/${PROJECT_NAME}/MyMass.cpp
     src/${PROJECT_NAME}/MyConstantForceField.cpp
@@ -25,7 +23,7 @@ set(SOURCE_FILES
 )
 
 set(HEADER_FILES
-    src/${PROJECT_NAME}/DataComponent.h
+    src/${PROJECT_NAME}/ComponentData.h
   
     src/${PROJECT_NAME}/MyUniformMass.h
     src/${PROJECT_NAME}/MyUniformMass.inl
