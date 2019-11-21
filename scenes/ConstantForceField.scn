@@ -18,5 +18,5 @@ def createScene(root):
     visu = torus.addChild("Visu")
     loader = visu.addObject("MeshObjLoader", name="loader", filename="mesh/torus.obj", scale=0.3, handleSeams=1)
     visual = visu.addObject("OglModel", name="visu", src="@loader", color="gray") # src is a link of a special type... maybe handle this later on
-    visu.addObject("RigidMapping", input=mo.getLinkPath(), output=visual.getLinkPath())
+    visu.addObject("MyRigidMapping", input=mo.getLinkPath(), output=visual.getLinkPath())
     

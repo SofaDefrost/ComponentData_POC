@@ -1,0 +1,11 @@
+# CMake package configuration file for the SofaQtQuickGUI plugin
+
+@PACKAGE_INIT@
+
+find_package(SofaFramework REQUIRED)
+
+if(NOT TARGET ComponentData_POC)
+  include("${CMAKE_CURRENT_LIST_DIR}/ComponentData_POCTargets.cmake")
+endif()
+
+check_required_components(ComponentData_POC)
