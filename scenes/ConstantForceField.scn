@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+import Sofa.Core
+
+def createScene(root):
+    root.dt = 0.05
+    root.gravity = [0,0,0]
+    root.addObject("RequiredPlugin", pluginName="SofaOpenglVisual")
+    root.addObject("VisualStyle", displayFlags="showBehaviorModels showForceFields")
+
+    torus = root.addChild("TorusRigid")
+    torus.addObject("EulerImplicitSolver", rayleighStiffness=0.01)
+    torus.addObject("CGLinearSolver", iterations=25, threshold=1e-9, tolerance=1e-5)
+    mo = torus.addObject("MyMechanicalObject", template="Rigid", dx=0, dy=0, dz=0, rx=0, ry=0, rz=0, scale=1.0)
+    torus.addObject("MyUniformMass")
+    torus.addObject("MyConstantForceField", indices=0, forces=[0, 0.1, 0, 0 1 0 0])
+
+    visu = torus.addChild("Visu")
+    loader = visu.addObject("MeshObjLoader", name="loader", filename="mesh/torus.obj", scale=0.3, handleSeams=1)
+    visual = visu.addObject("OglModel", name="visu", src="@loader", color="gray") # src is a link of a special type... maybe handle this later on
+    visu.addObject("RigidMapping", input=mo.getLinkPath(), output=visual.getLinkPath())
+    
