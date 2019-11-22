@@ -4,11 +4,14 @@ project(NodePhysics VERSION 1.0 LANGUAGES CXX)
 find_package(SofaFramework REQUIRED)
 
 set(HEADER_FILES
+        src/NodePhysics/config.h
+        src/NodePhysics/initNodePhysics.h
         src/NodePhysics/MechanicalObject.h        
         src/NodePhysics/MechanicalObject.inl        
     )
     
 set(SOURCE_FILES
+        src/NodePhysics/initNodePhysics.cpp
         src/NodePhysics/MechanicalObject.cpp
     )
     
