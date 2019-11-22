@@ -21,6 +21,8 @@
 ******************************************************************************/
 #pragma once
 
+#include <vector>
+#include <fstream>
 
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/topology/BaseMeshTopology.h>
@@ -32,9 +34,8 @@
 #include <sofa/defaulttype/RigidTypes.h>
 
 #include <NodePhysics/config.h>
+#include <NodePhysics/ObjectLink.h>
 
-#include <vector>
-#include <fstream>
 
 namespace nodephysics
 {
@@ -387,7 +388,8 @@ protected :
     //int vsize; ///< Number of elements to allocate in vectors
     Data< int > d_size; ///< Size of the vectors
 
-    SingleLink< MechanicalObject<DataTypes>, core::topology::BaseMeshTopology,BaseLink::FLAG_STRONGLINK|BaseLink::FLAG_STOREPATH> l_topology;
+    //SingleLink< MechanicalObject<DataTypes>, core::topology::BaseMeshTopology,BaseLink::FLAG_STRONGLINK|BaseLink::FLAG_STOREPATH> l_topology;
+    ObjectLink< sofa::core::topology::BaseMeshTopology > l_topology;
 
     Data< int > f_reserve; ///< Size to reserve when creating vectors. (default=0)
 
