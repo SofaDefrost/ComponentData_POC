@@ -19,32 +19,21 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <SofaImplicitField3/config.h>
+#include <NodePhysics/config.h>
 
 #include<sofa/core/ObjectFactory.h>
 using sofa::core::ObjectFactory;
 
-#include <SofaImplicitField/components/geometry/ScalarField.h>
-#include <SofaImplicitField/components/geometry/SphericalField.h>
-#include <SofaImplicitField/components/geometry/DiscreteGridField.h>
-#include <SofaImplicitField/components/visual/PointCloudImplicitFieldVisualization.h>
-
-#include <sofa/helper/system/PluginManager.h>
-using sofa::helper::system::PluginManager ;
-#include <SofaPython3/PythonEnvironment.h>
-
-
-
-namespace sofaimplicitfield3
+namespace nodephysics
 {
 
 extern "C" {
-SOFA_SOFAIMPLICITFIELD3_API void initExternalModule();
-SOFA_SOFAIMPLICITFIELD3_API const char* getModuleName();
-SOFA_SOFAIMPLICITFIELD3_API const char* getModuleVersion();
-SOFA_SOFAIMPLICITFIELD3_API const char* getModuleLicense();
-SOFA_SOFAIMPLICITFIELD3_API const char* getModuleDescription();
-SOFA_SOFAIMPLICITFIELD3_API const char* getModuleComponentList();
+SOFA_NODEPHYSICS_API void initExternalModule();
+SOFA_NODEPHYSICS_API const char* getModuleName();
+SOFA_NODEPHYSICS_API const char* getModuleVersion();
+SOFA_NODEPHYSICS_API const char* getModuleLicense();
+SOFA_NODEPHYSICS_API const char* getModuleDescription();
+SOFA_NODEPHYSICS_API const char* getModuleComponentList();
 }
 
 void initExternalModule()
@@ -54,9 +43,6 @@ void initExternalModule()
     {
         first = false;
     }
-
-    PluginManager::getInstance().loadPlugin("SofaPython3") ;
-    sofapython3::PythonEnvironment::runString("import Sofa");
 }
 
 const char* getModuleName()
@@ -77,7 +63,7 @@ const char* getModuleLicense()
 
 const char* getModuleDescription()
 {
-    return "Additional feature for modeling with implicit surfaces.";
+    return "Node based physics.";
 }
 
 const char* getModuleComponentList()

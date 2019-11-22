@@ -21,7 +21,6 @@
 ******************************************************************************/
 #pragma once
 
-#include "../../config.h"
 
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/topology/BaseMeshTopology.h>
@@ -31,6 +30,8 @@
 #include <sofa/defaulttype/Quat.h>
 #include <sofa/defaulttype/VecTypes.h>
 #include <sofa/defaulttype/RigidTypes.h>
+
+#include <NodePhysics/config.h>
 
 #include <vector>
 #include <fstream>
@@ -161,20 +162,22 @@ public:
     SReal getVY(size_t i) const { Real x=0.0,y=0.0,z=0.0; DataTypes::get(x,y,z, read(core::ConstVecDerivId::velocity())->getValue()[i]); return (SReal)y; }
     SReal getVZ(size_t i) const { Real x=0.0,y=0.0,z=0.0; DataTypes::get(x,y,z, read(core::ConstVecDerivId::velocity())->getValue()[i]); return (SReal)z; }
 
-
     std::string getClassName() const override
     {
-        return "YOLO.MechanicalObject";
+        return "NodePhysics.MechanicalObject";
     }
 
-    static std::string className(MechanicalObject* p)
+    static std::string className(const MechanicalObject<DataTypes>* p = nullptr)
     {
-        return "YOLO.MechanicalObject";
+        SOFA_UNUSED(p);
+        return "NodePhysics.MechanicalObject";
     }
 
-
-
-
+    static std::string templateName(const MechanicalObject<DataTypes>* t = nullptr)
+    {
+        SOFA_UNUSED(t);
+        return DataTypes::Name();
+    }
 
     /** \brief Overwrite values at index outputIndex by the ones at inputIndex.
      *

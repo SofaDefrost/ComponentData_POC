@@ -14,6 +14,7 @@ set(HEADER_FILES
         src/NodePhysics/initNodePhysics.h
         src/NodePhysics/MechanicalObject.h        
         src/NodePhysics/MechanicalObject.inl        
+        src/NodePhysics/ObjectLink.h
     )
     
 set(SOURCE_FILES
