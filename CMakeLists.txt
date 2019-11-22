@@ -39,3 +39,8 @@ sofa_generate_package(
     INCLUDE_INSTALL_DIR "NodePhysics"
     RELOCATABLE "plugins"
     )
+  
+set (NodePhysics_BUILD_TEST "ON")
+if (NodePhysics_BUILD_TEST)
+    add_subdirectory(tests)
+  
