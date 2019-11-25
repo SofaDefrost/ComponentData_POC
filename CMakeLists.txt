@@ -12,14 +12,11 @@ find_package(SofaFramework REQUIRED)
 set(HEADER_FILES
         src/NodePhysics/config.h
         src/NodePhysics/initNodePhysics.h
-        src/NodePhysics/MechanicalObject.h        
-        src/NodePhysics/MechanicalObject.inl        
         src/NodePhysics/ObjectLink.h
     )
     
 set(SOURCE_FILES
         src/NodePhysics/initNodePhysics.cpp
-        src/NodePhysics/MechanicalObject.cpp
     )
     
 set(EXTRA_FILES
@@ -43,4 +40,4 @@ sofa_generate_package(
 set (NodePhysics_BUILD_TEST "ON")
 if (NodePhysics_BUILD_TEST)
     add_subdirectory(tests)
-  
+endif (NodePhysics_BUILD_TEST)
