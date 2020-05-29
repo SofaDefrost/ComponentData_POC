@@ -21,7 +21,7 @@
 ******************************************************************************/
 #ifndef SOFA_COMPONENT_VOLUMETRIC_DATA_INIT_H
 #define SOFA_COMPONENT_VOLUMETRIC_DATA_INIT_H
-#include <SofaImplicitField3/config.h>
+#include <NodePhysics/config.h>
 
 
 #endif

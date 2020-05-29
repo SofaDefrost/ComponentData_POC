@@ -7,10 +7,10 @@ find_package(SofaTest REQUIRED)
 find_package(SofaGTestMain REQUIRED)
 
 set(SOURCE_FILES
-    ObjectLinkTest.cpp
+    Link_test.cpp
     )
 
-add_executable(${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${NodePhysics_INCLUDE_DIRS}")
 

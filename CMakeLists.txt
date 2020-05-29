@@ -12,15 +12,16 @@ find_package(SofaFramework REQUIRED)
 set(HEADER_FILES
         src/NodePhysics/config.h
         src/NodePhysics/initNodePhysics.h
-        src/NodePhysics/MechanicalObject.h        
-        src/NodePhysics/MechanicalObject.inl        
-        src/NodePhysics/ObjectLink.h
+        src/NodePhysics/Link.h
+        src/NodePhysics/Link.inl
+        src/NodePhysics/DataTrackerEngine.h
     )
     
 set(SOURCE_FILES
         src/NodePhysics/initNodePhysics.cpp
-        src/NodePhysics/MechanicalObject.cpp
-    )
+        src/NodePhysics/Link.cpp
+        src/NodePhysics/DataTrackerEngine.cpp
+        )
     
 set(EXTRA_FILES
         README.md
@@ -40,7 +41,7 @@ sofa_generate_package(
     RELOCATABLE "plugins"
     )
   
-set (NodePhysics_BUILD_TEST "ON")
-if (NodePhysics_BUILD_TEST)
-    add_subdirectory(tests)
-  
+ set (NodePhysics_BUILD_TEST "ON")
+ if (NodePhysics_BUILD_TEST)
+     add_subdirectory(tests)
+ endif (NodePhysics_BUILD_TEST)
