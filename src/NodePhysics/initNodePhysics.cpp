@@ -47,7 +47,7 @@ void initExternalModule()
 
 const char* getModuleName()
 {
-    return "SofaImplicitField3";
+    return "NodePhysics";
 }
 
 const char* getModuleVersion()
@@ -73,5 +73,5 @@ const char* getModuleComponentList()
     return classes.c_str();
 }
 
-} /// sofaimplicitefield3
+} /// nodephysics
 

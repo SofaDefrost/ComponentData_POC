@@ -1,2 +1,2 @@
 # ComponentData_POC
-A POC to get rid of Links between components by replacing them by datafields templated over Component::SPtrs
+A POC to stop relying on the bulky, over-templated Link API in sofa::core::objectmodel to link components to each other
