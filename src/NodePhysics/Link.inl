@@ -26,7 +26,7 @@ void Link<T>::setLinkedDest(T* linkedDest)
 template<class T>
 T* Link<T>::getLinkedDest()
 {
-    return dynamic_cast<T*>(m_linkedDest->getBase());
+    return dynamic_cast<T*>(m_linkedDest);
 }
 
 template<class T>

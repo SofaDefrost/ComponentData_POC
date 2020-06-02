@@ -21,16 +21,16 @@ public:
     sofa::Data<bool> output;
 
     ClassA()
-        : nodephysics::LinkHandler(this),
+        : nodephysics::LinkHandler(),
           Inherit1(),
           input(initData(&input, false, "in", "in")),
           output(initData(&output, "out", "out"))
     {
-//        addUpdateCallback("engineA", {&input}, [&]() -> ComponentState {
-//            std::cout << "in engineA" << std::endl;
-//            output.setValue(input.getValue());
-//            return sofa::core::objectmodel::ComponentState::Valid;
-//        }, {&output});
+        addUpdateCallback("engineA", {&input}, [&]() -> ComponentState {
+            std::cout << "in engineA" << std::endl;
+            output.setValue(input.getValue());
+            return sofa::core::objectmodel::ComponentState::Valid;
+        }, {&output});
     }
 
     ~ClassA() override {}
@@ -43,15 +43,15 @@ public:
 
     ClassB()
         : Inherit1(),
-          nodephysics::LinkHandler(this),
+          nodephysics::LinkHandler(),
           inputLink(nodephysics::initLink(this, "in", "help string")),
           output(initData(&output, "out", "out"))
     {
-//        addUpdateCallback("engineB", {&inputLink}, [&]() -> ComponentState {
-//            std::cout << "in engineB" << std::endl;
-//            output.setValue(inputLink.getLinkedDest()->output.getValue());
-//            return sofa::core::objectmodel::ComponentState::Valid;
-//        }, {&output});
+        addUpdateCallback("engineB", {&inputLink}, [&]() -> ComponentState {
+            std::cout << "in engineB" << std::endl;
+            output.setValue(inputLink.getLinkedDest()->output.getValue());
+            return sofa::core::objectmodel::ComponentState::Valid;
+        }, {&output});
     }
 
     ~ClassB() override {}
@@ -92,11 +92,15 @@ struct Link_test: public BaseTest
         bodB.setAttribute("in", "@/A");
         bodB.setAttribute("out", "false");
         b->parse(&bodB);
+
+        std::cout << "B inputLink dest: " <<  b->inputLink.getLinkedDest() << std::endl;
+        std::cout << "B inputLink owner: " <<  b->inputLink.getLinkedDest() << std::endl;
     }
 
     void testGraphConsistency()
     {
         std::cout << "INITIAL STATE (everything but A::in should be dirty):" << std::endl;
+
         ASSERT_FALSE(a->input.isDirty());
         ASSERT_TRUE(a->output.isDirty());
         ASSERT_TRUE(a->d_componentstate.isDirty());
@@ -130,7 +134,7 @@ struct Link_test: public BaseTest
     {
 
         ASSERT_TRUE(a.get() == b->inputLink.getLinkedDest());
-        ASSERT_TRUE(b.get() == b->inputLink.getHandler());
+        ASSERT_TRUE(b.get() == b->inputLink.getOwner());
 
         ClassA::SPtr c = sofa::core::objectmodel::New<ClassA>();
         c->setName("C");
@@ -144,7 +148,7 @@ struct Link_test: public BaseTest
     void testLink_ownership_methods()
     {
         ASSERT_EQ(a->getLinkHandlers().size(), 1);
-        ASSERT_EQ(a->getLinkHandlers().front()->getBase()->getName(), b->getName());
+        ASSERT_EQ(a->getLinkHandlers().front()->getName(), b->getName());
 
 
         ClassA::SPtr c = sofa::core::objectmodel::New<ClassA>();
@@ -154,7 +158,7 @@ struct Link_test: public BaseTest
 
         ASSERT_EQ(a->getLinkHandlers().size(), 0);
         ASSERT_EQ(c->getLinkHandlers().size(), 1);
-        ASSERT_EQ(c->getLinkHandlers().front()->getBase()->getName(), b->getName());
+        ASSERT_EQ(c->getLinkHandlers().front()->getName(), b->getName());
 
         b->inputLink.setLinkedDest(nullptr);
         ASSERT_EQ(c->getLinkHandlers().size(), 0);

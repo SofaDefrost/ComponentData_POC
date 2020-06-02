@@ -2,6 +2,7 @@
 
 #include "DataTrackerEngine.h"
 
+#include <sofa/core/objectmodel/Base.h>
 #include <sofa/core/objectmodel/DDGNode.h>
 #include <sofa/core/objectmodel/ComponentState.h>
 #include <sofa/core/objectmodel/BaseData.h>
@@ -9,8 +10,6 @@
 #include <sofa/core/core.h>
 
 #include <list>
-
-namespace sofa::core::objectmodel { class Base; }
 
 namespace nodephysics
 {
@@ -37,22 +36,22 @@ public:
               help(""),
               group(""),
               linkedDest(nullptr),
-              handler(nullptr)
+              owner(nullptr)
         {}
 
         std::string name;
         std::string help;
         std::string group;
         LinkHandler* linkedDest;
-        LinkHandler* handler;
+        LinkHandler* owner;
     };
 
     explicit BaseLink(const InitLink& init);
 
     virtual ~BaseLink() override;
 
-    void setHandler(LinkHandler* handler);
-    LinkHandler* getHandler();
+    void setOwner(LinkHandler* owner);
+    LinkHandler* getOwner();
 
     void setLinkedDest(LinkHandler* linkedDest);
     LinkHandler* getLinkedDest();
@@ -68,7 +67,7 @@ protected:
     std::string m_group {""};
 
     LinkHandler* m_linkedDest {nullptr};
-    LinkHandler* m_handler {nullptr};
+    LinkHandler* m_owner {nullptr};
 
 private:
     /// Number of changes since creation
@@ -97,14 +96,20 @@ class Link : public BaseLink
 
 // This class should be inherited by Base, and handles a list of all links this object has registered,
 // along with all link handlers pointing to this object.
-class LinkHandler
+class LinkHandler : public virtual sofa::core::objectmodel::Base
 {
 public:
-    LinkHandler(sofa::core::objectmodel::Base* _this);
+    LinkHandler();
 
     typedef std::list<BaseLink*> LinkList;
     typedef std::list<LinkHandler*> LinkHandlers;
     typedef std::map<std::string, BaseLink*> LinkMap;
+
+
+    bool hasField( const std::string& attribute) const override;
+
+    /// Assign one field value (Data or Link)
+    bool parseField( const std::string& attribute, const std::string& value) override;
 
     /// Find a link given its name. Return nullptr if not found.
     BaseLink* findLink( const std::string &name ) const;
@@ -127,11 +132,6 @@ public:
     /// Accessor to the list of handlers holding a link to this object
     const LinkHandlers getLinkHandlers() const { return m_linkHandlers; }
 
-    /// Returns the pointer to the Base class of this scene graph item
-    sofa::core::objectmodel::Base* getBase() { return m_base; }
-    const sofa::core::objectmodel::Base* getBase() const { return m_base; }
-
-
     // This callback mechanism is already part of Base in our SOFA branch for SofaQtQuick, used w/o any observed side-effects:
     void addUpdateCallback(const std::string& name,
                            std::initializer_list<sofa::core::objectmodel::DDGNode*> inputs,
@@ -142,17 +142,16 @@ private:
     LinkList m_linkList; // The list of all links handled by this object, pointing to other objects
     LinkMap m_linkAliases;
     LinkHandlers m_linkHandlers; // The list of all handlers holding a link to this object
-    sofa::core::objectmodel::Base* m_base; // The pointer to the Base that uses this handler
     std::map<std::string, nodephysics::DataTrackerEngine> m_internalEngine;
 };
 
-BaseLink::InitLink initLink(LinkHandler* handler,
+BaseLink::InitLink initLink(LinkHandler* owner,
                                std::string name,
                                std::string help,
                                std::string group = "")
 {
     BaseLink::InitLink init;
-    init.handler = handler;
+    init.owner = owner;
     init.name = name;
     init.help = help;
     init.group = group;
